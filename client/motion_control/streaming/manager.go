@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
-	protocol_streaming "gsail-go/linmot/protocol/motion_control/streaming"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
+	protocol_streaming "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control/streaming"
 )
 
 // StreamingManager handles streaming motion commands.

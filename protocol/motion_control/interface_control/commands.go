@@ -1,7 +1,7 @@
 package protocol_interface_control
 
 import (
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
 )
 
 // ============================================================================

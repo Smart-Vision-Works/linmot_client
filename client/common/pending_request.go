@@ -2,7 +2,7 @@ package client_common
 
 import (
 	"context"
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 	"sync"
 	"time"
 )

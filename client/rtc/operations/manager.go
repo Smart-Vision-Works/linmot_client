@@ -3,8 +3,8 @@ package client_operations
 import (
 	"context"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_operations "gsail-go/linmot/protocol/rtc/operations"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_operations "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/operations"
 )
 
 type OperationManager struct {

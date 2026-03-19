@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 // Compile-time interface checks

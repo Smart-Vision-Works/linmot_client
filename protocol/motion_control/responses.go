@@ -3,7 +3,7 @@ package protocol_motion_control
 import (
 	"encoding/binary"
 
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 // Compile-time interface checks

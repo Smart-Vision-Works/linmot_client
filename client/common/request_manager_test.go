@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
-	transport "gsail-go/linmot/transport"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
+	transport "github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // blockingTransport wraps a transport.Client and can block SendPacket calls

@@ -9,16 +9,16 @@ import (
 
 	"github.com/pkg/errors"
 
-	client_common "gsail-go/linmot/client/common"
-	client_control_word "gsail-go/linmot/client/control_word"
-	client_monitoring "gsail-go/linmot/client/monitoring"
-	client_motion_control "gsail-go/linmot/client/motion_control"
-	client_rtc "gsail-go/linmot/client/rtc"
-	client_command_tables "gsail-go/linmot/client/rtc/command_tables"
-	client_errors "gsail-go/linmot/client/rtc/errors"
-	client_parameters "gsail-go/linmot/client/rtc/parameters"
-	protocol_common "gsail-go/linmot/protocol/common"
-	transport "gsail-go/linmot/transport"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	client_control_word "github.com/Smart-Vision-Works/linmot_client/client/control_word"
+	client_monitoring "github.com/Smart-Vision-Works/linmot_client/client/monitoring"
+	client_motion_control "github.com/Smart-Vision-Works/linmot_client/client/motion_control"
+	client_rtc "github.com/Smart-Vision-Works/linmot_client/client/rtc"
+	client_command_tables "github.com/Smart-Vision-Works/linmot_client/client/rtc/command_tables"
+	client_errors "github.com/Smart-Vision-Works/linmot_client/client/rtc/errors"
+	client_parameters "github.com/Smart-Vision-Works/linmot_client/client/rtc/parameters"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	transport "github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 const (

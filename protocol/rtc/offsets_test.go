@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 func expectedOffset(repBits uint32, targetBit uint32) int {

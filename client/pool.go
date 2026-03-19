@@ -7,7 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"gsail-go/linmot/transport"
+	"github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // ClientPool manages LinMot drive connections with automatic client pooling.

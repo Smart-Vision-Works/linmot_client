@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"testing"
 
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 // TestMCCommandResponse_WritePacket tests MC response packet structure

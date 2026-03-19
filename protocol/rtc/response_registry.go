@@ -1,6 +1,6 @@
 package protocol_rtc
 
-import protocol_common "gsail-go/linmot/protocol/common"
+import protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 
 // ResponseRegistry creates a typed RTC response from parsed packet data.
 // Domain packages (e.g., motion_control, command_tables) can register factories to create

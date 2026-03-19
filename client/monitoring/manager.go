@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 )
 
 // MonitoringManager handles monitoring channel configuration and data retrieval.

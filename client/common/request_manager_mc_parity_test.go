@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
-	transport "gsail-go/linmot/transport"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
+	transport "github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // mcTrackingTransport wraps a transport.Client and records all SendPacket calls

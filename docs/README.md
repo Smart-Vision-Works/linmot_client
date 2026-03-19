@@ -1,8 +1,6 @@
 # LinMot Reference Documentation
 
-This directory contains official LinMot documentation (converted to Markdown from NTI AG PDFs) and source code references for LinMot integration in SVW systems.
-
-For **operational setup** — commissioning drives, factory reset, network configuration, ScreenConnect recovery, and stage_primer's role — see [`stage_primer/LINMOT_HELP.md`](../../stage_primer/LINMOT_HELP.md).
+This directory contains official LinMot documentation (converted to Markdown from NTI AG PDFs) and source code references for LinMot integration.
 
 ---
 
@@ -27,7 +25,7 @@ For **operational setup** — commissioning drives, factory reset, network confi
 
 | File | Description |
 |------|-------------|
-| [decompiled_linudp_csharp_lib.cs](decompiled_linudp_csharp_lib.cs) | Decompiled official LinUDP C# library. Reference for understanding ACI function signatures, packet construction, and behavior that our Go implementation mirrors. |
+| [decompiled_linudp_csharp_lib.cs](decompiled_linudp_csharp_lib.cs) | Decompiled official LinUDP C# library. Reference for understanding ACI function signatures, packet construction, and behavior that the Go implementation mirrors. |
 
 ---
 
@@ -50,13 +48,13 @@ For **operational setup** — commissioning drives, factory reset, network confi
 | Required RS232 cable and adapter art. numbers | `C1250_MI_Installation_Guide.md` §11 (0150-2143, 0150-2473) |
 | Easy Steps auto start / auto home | `LinMot_MotionCtrl.md` |
 | Position controller: Set Soft vs. Set Stiff | `LinMot_MotionCtrl.md` |
-| 14 operational ROM parameters written by stage_primer | `stage_primer/primer/linmot/setup.go` |
+| 14 operational ROM parameters written on commissioning | `LinUDP_V2_DLL.md` Appendix I |
 
 ---
 
-## Our Drive Configuration
+## Drive Configuration Reference
 
-For reference, here are the SVW-specific values used when commissioning or recovering these drives:
+Reference values for commissioning or recovering these drives:
 
 | Parameter | LinMot 0 | LinMot 1 |
 |-----------|----------|----------|

@@ -2,7 +2,7 @@ package protocol_control_word
 
 import (
 	"encoding/binary"
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 	"time"
 )
 

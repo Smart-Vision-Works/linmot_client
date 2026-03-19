@@ -3,13 +3,13 @@ package client_motion_control
 import (
 	"context"
 
-	client_common "gsail-go/linmot/client/common"
-	client_interface_control "gsail-go/linmot/client/motion_control/interface_control"
-	client_predefined "gsail-go/linmot/client/motion_control/predefined"
-	client_streaming "gsail-go/linmot/client/motion_control/streaming"
-	client_vai "gsail-go/linmot/client/motion_control/vai"
-	client_vai16 "gsail-go/linmot/client/motion_control/vai16"
-	protocol_common "gsail-go/linmot/protocol/common"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	client_interface_control "github.com/Smart-Vision-Works/linmot_client/client/motion_control/interface_control"
+	client_predefined "github.com/Smart-Vision-Works/linmot_client/client/motion_control/predefined"
+	client_streaming "github.com/Smart-Vision-Works/linmot_client/client/motion_control/streaming"
+	client_vai "github.com/Smart-Vision-Works/linmot_client/client/motion_control/vai"
+	client_vai16 "github.com/Smart-Vision-Works/linmot_client/client/motion_control/vai16"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 // MotionControlManager handles MC (Motion Command) Interface operations.

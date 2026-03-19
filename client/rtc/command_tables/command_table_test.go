@@ -1,7 +1,7 @@
 package client_command_tables
 
 import (
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
 	"os"
 	"path/filepath"
 	"runtime"

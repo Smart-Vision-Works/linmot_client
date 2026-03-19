@@ -1,4 +1,4 @@
-# gsail-go/linmot
+# linmot-client
 
 > **Module Description:** Go implementation of the LinUDP V2 protocol for LinMot C1250 servo drives. Full high-level client API with multi-drive pooling, YAML-loadable command tables with template variables, RTC parameter access, motion control (VAI/streaming/predefined), 4-channel monitoring, and a complete mock drive for unit and E2E testing.
 
@@ -44,7 +44,7 @@ A pure-Go implementation of the **LinUDP V2** communication protocol for LinMot 
 ## 1. Module Layout
 
 ```
-gsail-go/linmot/
+linmot_client/
 ├── client.go                          # Top-level convenience: NewClient(driveIP)
 │
 ├── client/                            # High-level Client API
@@ -168,7 +168,7 @@ gsail-go/linmot/
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                   Caller (stage_primer, etc.)               │
+│                   Your application               │
 ├─────────────────────────────────────────────────────────────┤
 │  linmot.NewClient(ip)  ─────────────────────────────────────┤  ← top-level entry point
 │  client.Client  (client.go)                                  │
@@ -235,7 +235,7 @@ All managers share a single `RequestManager`, which serialises requests to the d
 ## 3. Quick Start
 
 ```go
-import "gsail-go/linmot"
+import "github.com/Smart-Vision-Works/linmot_client"
 
 // Single drive — uses default ports (drive:49360, master:41136)
 c, err := linmot.NewClient("10.8.7.232")
@@ -667,16 +667,16 @@ defer drive.Close()
 
 ```bash
 # From module root
-go test ./gsail-go/linmot/...
+go test ./linmot_client/...
 
 # Specific package
-go test -v ./gsail-go/linmot/client/...
+go test -v ./linmot_client/client/...
 
 # E2E tests (require a real drive, skipped by default)
-LINMOT_E2E_HOST=10.8.7.232 go test -v ./gsail-go/linmot/client/ -run TestE2E
+LINMOT_E2E_HOST=10.8.7.232 go test -v ./linmot_client/client/ -run TestE2E
 
 # Enable test debug logging
-LINMOT_TEST_DEBUG=1 go test ./gsail-go/linmot/...
+LINMOT_TEST_DEBUG=1 go test ./linmot_client/...
 ```
 
 The module has **42 test files** and **148 Go source files**. Tests cover:

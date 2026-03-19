@@ -131,7 +131,7 @@ func createUDPConnection(localIP net.IP, masterPort int) (*net.UDPConn, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err,
 			"failed to bind to master port %d - LinMot requires packets from this exact port. "+
-				"Check if another process is using port %d (e.g., another LinMot client, stage_primer)",
+				"Check if another process is using port %d (e.g., another process or LinMot client)",
 			masterPort, masterPort)
 	}
 

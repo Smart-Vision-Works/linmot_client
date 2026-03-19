@@ -8,7 +8,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
 )
 
 // Param represents a template-capable parameter value.

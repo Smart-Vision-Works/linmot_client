@@ -3,7 +3,7 @@ package client_common
 import (
 	"sync"
 
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 )
 
 // RtcCounter manages the RTC command counter for LinUDP V2 protocol communication.

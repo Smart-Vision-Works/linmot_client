@@ -18,13 +18,13 @@ import (
 
 	_ "embed"
 
-	client_common "gsail-go/linmot/client/common"
-	client_command_tables "gsail-go/linmot/client/rtc/command_tables"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
-	"gsail-go/linmot/test"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	client_command_tables "github.com/Smart-Vision-Works/linmot_client/client/rtc/command_tables"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
+	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 var (
@@ -714,16 +714,14 @@ func TestClient_SetCommandTable_ProductionTemplate(t *testing.T) {
 	defer deferCleanup(t, cleanup)
 
 	// Find the production template YAML file
-	// Try multiple paths (production, dev, workspace-relative)
+	// Try multiple paths (production, repo-relative)
 	wd, _ := os.Getwd()
-	// Go up from test dir (gsail-go/linmot/client) to workspace root (svw_mono)
-	workspaceRoot := filepath.Join(wd, "..", "..", "..")
-	absWorkspaceRoot, _ := filepath.Abs(workspaceRoot)
+	// Go up from test dir (linmot_client/client) to repo root
+	repoRoot := filepath.Join(wd, "..")
+	absRepoRoot, _ := filepath.Abs(repoRoot)
 
 	templatePaths := []string{
-		"/opt/svw/stage_primer/primer/linmot/linmot_command_table.yaml",                                  // Production path
-		filepath.Join(absWorkspaceRoot, "stage_primer", "primer", "linmot", "linmot_command_table.yaml"), // Relative to workspace root
-		filepath.Join(absWorkspaceRoot, "gsail-go", "linmot", "client", "rtc", "command_tables", "testdata", "linmot_command_table.yaml"),
+		filepath.Join(absRepoRoot, "client", "rtc", "command_tables", "testdata", "linmot_command_table.yaml"), // Repo-relative testdata
 	}
 
 	var template *client_command_tables.CommandTable
@@ -753,8 +751,8 @@ func TestClient_SetCommandTable_ProductionTemplate(t *testing.T) {
 	// Copy template to avoid modifying the cached/loaded version
 	templateCopy := *template
 
-	// Set variables with realistic production values (matching stage_primer behavior)
-	// Unit conversion constants (matching stage_primer/primer/linmot/command_table.go)
+	// Set variables with realistic production values
+	// Unit conversion constants
 	const (
 		PositionUnit        = 10000 // mm → 0.1µm units
 		VelocityUnit        = 100   // percent → µm/s
@@ -769,7 +767,7 @@ func TestClient_SetCommandTable_ProductionTemplate(t *testing.T) {
 	defaultAcceleration := 100.0 // percent
 	pickTime := 0.1              // seconds
 
-	// Set variables (matching stage_primer variable binding)
+	// Set variables
 	positionDown := int64(zDistance * PositionUnit)
 	positionUp := int64(0)
 	templateCopy.SetVar("POSITION_DOWN", positionDown)

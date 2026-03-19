@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	protocol_curves "gsail-go/linmot/protocol/rtc/curves"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	protocol_curves "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/curves"
 )
 
 type CurveManager struct {

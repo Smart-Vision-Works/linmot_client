@@ -8,10 +8,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
 )
 
 // ErrCommandTableUnchanged is returned by SetCommandTableWithOptions when the

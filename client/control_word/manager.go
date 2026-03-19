@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_control_word "gsail-go/linmot/protocol/control_word"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_control_word "github.com/Smart-Vision-Works/linmot_client/protocol/control_word"
 )
 
 type ControlWordManager struct {

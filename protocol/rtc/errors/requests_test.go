@@ -3,7 +3,7 @@ package protocol_errors
 import (
 	"testing"
 
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 )
 
 func TestRoundTrip_GetErrorLogEntryCounterRequest(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	"gsail-go/linmot/test"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 func TestAssertDriveOperational_FirmwareStopped(t *testing.T) {

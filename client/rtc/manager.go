@@ -3,13 +3,13 @@ package client_rtc
 import (
 	"context"
 
-	client_common "gsail-go/linmot/client/common"
-	client_command_tables "gsail-go/linmot/client/rtc/command_tables"
-	client_curves "gsail-go/linmot/client/rtc/curves"
-	client_errors "gsail-go/linmot/client/rtc/errors"
-	client_operations "gsail-go/linmot/client/rtc/operations"
-	client_parameters "gsail-go/linmot/client/rtc/parameters"
-	protocol_common "gsail-go/linmot/protocol/common"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	client_command_tables "github.com/Smart-Vision-Works/linmot_client/client/rtc/command_tables"
+	client_curves "github.com/Smart-Vision-Works/linmot_client/client/rtc/curves"
+	client_errors "github.com/Smart-Vision-Works/linmot_client/client/rtc/errors"
+	client_operations "github.com/Smart-Vision-Works/linmot_client/client/rtc/operations"
+	client_parameters "github.com/Smart-Vision-Works/linmot_client/client/rtc/parameters"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 type RtcManager struct {

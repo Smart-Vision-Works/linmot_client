@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	protocol_common "gsail-go/linmot/protocol/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
 )
 
 type ErrDriveNotOperational struct {

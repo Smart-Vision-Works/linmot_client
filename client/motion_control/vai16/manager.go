@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
-	protocol_vai16 "gsail-go/linmot/protocol/motion_control/vai16"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
+	protocol_vai16 "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control/vai16"
 )
 
 // VAI16Manager handles 16-bit VAI (Variable Interpolator) motion commands.

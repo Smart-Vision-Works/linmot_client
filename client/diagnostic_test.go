@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	transport "gsail-go/linmot/transport"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	transport "github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // newUDPClientNoValidation creates a UDP client WITHOUT connectivity validation.

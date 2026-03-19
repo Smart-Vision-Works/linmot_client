@@ -7,12 +7,12 @@ import (
 	"testing"
 	"time"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_control_word "gsail-go/linmot/protocol/control_word"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	protocol_command_tables "gsail-go/linmot/protocol/rtc/command_tables"
-	protocol_parameters "gsail-go/linmot/protocol/rtc/parameters"
-	"gsail-go/linmot/test"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_control_word "github.com/Smart-Vision-Works/linmot_client/protocol/control_word"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
+	protocol_parameters "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/parameters"
+	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 func TestNewClient(t *testing.T) {

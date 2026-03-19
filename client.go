@@ -1,8 +1,8 @@
 package linmot
 
 import (
-	"gsail-go/linmot/client"
-	"gsail-go/linmot/transport"
+	"github.com/Smart-Vision-Works/linmot_client/client"
+	"github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // NewClient creates a new UDP client for communicating with a LinMot drive using default settings.

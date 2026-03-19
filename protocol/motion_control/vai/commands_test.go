@@ -4,8 +4,8 @@ import (
 	"encoding/binary"
 	"testing"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_motion_control "gsail-go/linmot/protocol/motion_control"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
 )
 
 // TestVAIGoToPosCommand_RoundTrip tests the Go To Position command

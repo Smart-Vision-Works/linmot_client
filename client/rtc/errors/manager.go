@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	client_common "gsail-go/linmot/client/common"
-	protocol_errors "gsail-go/linmot/protocol/rtc/errors"
+	client_common "github.com/Smart-Vision-Works/linmot_client/client/common"
+	protocol_errors "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/errors"
 )
 
 type ErrorManager struct {

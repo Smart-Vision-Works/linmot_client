@@ -3,8 +3,8 @@ package protocol_parameters
 import (
 	"fmt"
 
-	protocol_common "gsail-go/linmot/protocol/common"
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
+	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 )
 
 // Compile-time interface checks

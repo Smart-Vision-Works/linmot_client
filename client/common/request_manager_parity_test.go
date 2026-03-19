@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	protocol_rtc "gsail-go/linmot/protocol/rtc"
-	transport "gsail-go/linmot/transport"
+	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
+	transport "github.com/Smart-Vision-Works/linmot_client/transport"
 )
 
 // TestRequestManager_CmdCountNotConsumedOnSendFailure verifies that RTC cmdCount is consumed

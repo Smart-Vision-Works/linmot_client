@@ -1,0 +1,86 @@
+version: 1
+drive_model: C1250-MI
+entries:
+  # 1: move to down position (pick)
+  - id: 1
+    name: "move down"
+    type: VAI_GoToPos
+    par1: ${POSITION_DOWN} # Absolute position in 0.1µm units
+    par2: ${MAX_VELOCITY} # Max Vel
+    par3: ${ACCELERATION} # Acc
+    par4: ${DECELERATION} # Dec
+    sequenced_entry: 2
+
+  # 2: wait for motion to complete before actuating vacuum
+  - id: 2
+    name: "wait for motion"
+    type: WaitMotionFinished
+    sequenced_entry: 3
+
+  # 3: vacuum on, purge off (close claw to grab item)
+  - id: 3
+    name: "von/poff"
+    type: SetDO
+    par1: 0x0003 # X4 Write Bit Mask
+    par2: 0x0002 # X4 Write Bit Value
+    sequenced_entry: 4
+
+  # 4: wait at bottom (dwell time for grip)
+  - id: 4
+    name: "wait at bottom"
+    type: Delay
+    par1: ${DELAY_AT_BOTTOM} # Time in 100µs units
+    sequenced_entry: 5
+
+  # 5: move to up position (lift with item)
+  - id: 5
+    name: "move up"
+    type: VAI_GoToPos
+    par1: ${POSITION_UP} # Absolute position (Slider Home Position = 10mm)
+    par2: ${MAX_VELOCITY} # Max Vel
+    par3: ${ACCELERATION} # Acc
+    par4: ${DECELERATION} # Dec
+    sequenced_entry: 6
+
+  # 6: wait for motion to complete before checking trigger
+  - id: 6
+    name: "wait for motion"
+    type: WaitMotionFinished
+    sequenced_entry: 7
+
+  # 7: trigger check (wait for ClearCore to release trigger at drop position)
+  - id: 7
+    name: "trigger check"
+    type: IfMaskedX4Eq
+    par1: 0x0002 # X4 Read Bit Mask
+    par2: 0x0002 # X4 Read Bit Value
+    par3: 8 # True Entry ID: 8 (trigger still high — wait)
+    par4: 9 # False Entry ID: 9 (trigger released — drop)
+
+  # 8: wait for falling edge (ClearCore releases trigger)
+  - id: 8
+    name: "falling edge"
+    type: WaitFalling
+    sequenced_entry: 9
+
+  # 9: vacuum off, purge on (open claw to release item)
+  - id: 9
+    name: "voff/pon"
+    type: SetDO
+    par1: 0x0003 # Mask: bits 0+1
+    par2: 0x0001 # Value: bit 0 = purge ON, bit 1 = vacuum OFF
+    sequenced_entry: 10
+
+  # 10: wait for purge
+  - id: 10
+    name: "wait"
+    type: Delay
+    par1: ${DELAY_PURGE} # Time: 500 ms = 5000 in 100µs units
+    sequenced_entry: 11
+
+  # 11: all outputs off
+  - id: 11
+    name: "off"
+    type: SetDO
+    par1: 0x0003 # Mask: bits 0+1
+    par2: 0x0000 # Value: all off

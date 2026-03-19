@@ -1,0 +1,35 @@
+version: 1
+drive_model: C1250-MI
+entries:
+  # 1: move to down position
+  - id: 1
+    name: "move down"
+    type: VAI_GoToPos
+    par1: ${POSITION_DOWN} # Absolute position in 0.1µm units
+    par2: ${MAX_VELOCITY} # Max Vel
+    par3: ${ACCELERATION} # Acc
+    par4: ${DECELERATION} # Dec
+    sequenced_entry: 2
+
+  # 2: wait for motion (until velocity < threshold)
+  - id: 2
+    name: "wait for motion"
+    type: WaitDemandVelLT
+    par1: 0 # Threshold: 0 (wait until stopped)
+    sequenced_entry: 3
+
+  # 3: wait at bottom
+  - id: 3
+    name: "wait at bottom"
+    type: Delay
+    par1: ${DELAY_AT_BOTTOM} # Time in 100µs units
+    sequenced_entry: 4
+
+  # 4: move to up position
+  - id: 4
+    name: "move up"
+    type: VAI_GoToPos
+    par1: ${POSITION_UP} # Absolute position (Slider Home Position = 10mm)
+    par2: ${MAX_VELOCITY} # Max Vel
+    par3: ${ACCELERATION} # Acc
+    par4: ${DECELERATION} # Dec

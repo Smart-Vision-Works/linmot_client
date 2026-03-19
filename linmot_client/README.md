@@ -1,4 +1,4 @@
-# linmot-client
+# linmot_client
 
 > **Module Description:** Go implementation of the LinUDP V2 protocol for LinMot C1250 servo drives. Full high-level client API with multi-drive pooling, YAML-loadable command tables with template variables, RTC parameter access, motion control (VAI/streaming/predefined), 4-channel monitoring, and a complete mock drive for unit and E2E testing.
 
@@ -150,7 +150,7 @@ linmot_client/
 ├── test/
 │   └── mock_linmot.go                 # MockLinMot — full state-machine drive simulator
 │
-└── docs/                              # Official LinMot documentation
+└── reference/                              # Official LinMot documentation
     ├── README.md                      # Doc index, key reference points, drive configuration table
     ├── C1250_MI_Installation_Guide.md # Hardware guide: connectors, DIP switches, LED blink codes
     ├── LinUDP_V2.md                   # Protocol manual: packet format, UPID list, monitoring channels
@@ -201,11 +201,11 @@ type Client interface {
 }
 ```
 
-| Transport | When to use |
-|-----------|-------------|
-| [`UDPTransportClient`](transport/udp_client.go) | Single drive, dedicated socket per client |
-| [`SharedUDPTransport`](transport/shared_udp.go) | Multiple drives from **one** master port (41136) — required when running >1 client simultaneously |
-| [`MockTransportClient`](transport/mock_client.go) | Unit tests — in-memory channels, no network |
+| Transport                                         | When to use                                                                                       |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [`UDPTransportClient`](transport/udp_client.go)   | Single drive, dedicated socket per client                                                         |
+| [`SharedUDPTransport`](transport/shared_udp.go)   | Multiple drives from **one** master port (41136) — required when running >1 client simultaneously |
+| [`MockTransportClient`](transport/mock_client.go) | Unit tests — in-memory channels, no network                                                       |
 
 **Why SharedUDPTransport?** LinMot drives filter incoming packets by source port. All clients must originate from port 41136. You cannot bind two sockets to the same port. `SharedUDPTransport` owns one socket and routes received packets to the correct per-drive channel by source IP.
 
@@ -221,12 +221,12 @@ type Client interface {
 
 `client.Client` composes four specialized managers:
 
-| Manager | Responsibility |
-|---------|----------------|
-| `ControlWordManager` | State machine transitions: enable, disable, home, quick-stop, error-acknowledge |
-| `RtcManager` | All RTC channel operations: parameters, command tables, curves, error log, drive operations |
-| `MonitoringManager` | Configure and read 4-channel live variable monitoring |
-| `MotionControlManager` | All MC interface commands: VAI, predefined, VAI16, streaming, interface control |
+| Manager                | Responsibility                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `ControlWordManager`   | State machine transitions: enable, disable, home, quick-stop, error-acknowledge             |
+| `RtcManager`           | All RTC channel operations: parameters, command tables, curves, error log, drive operations |
+| `MonitoringManager`    | Configure and read 4-channel live variable monitoring                                       |
+| `MotionControlManager` | All MC interface commands: VAI, predefined, VAI16, streaming, interface control             |
 
 All managers share a single `RequestManager`, which serialises requests to the drive via its TX/RX goroutine pair. The `RequestManager` starts on client creation and stops when `Close()` is called.
 
@@ -235,7 +235,7 @@ All managers share a single `RequestManager`, which serialises requests to the d
 ## 3. Quick Start
 
 ```go
-import "github.com/Smart-Vision-Works/linmot_client"
+import "github.com/Smart-Vision-Works/staged_robot"
 
 // Single drive — uses default ports (drive:49360, master:41136)
 c, err := linmot.NewClient("10.8.7.232")
@@ -286,32 +286,32 @@ LinUDP V2 is a UDP-based binary protocol defined by NTI AG (LinMot). Key facts:
 - **Response structure:** 8-byte header + 20-byte status block + optional MonitoringChannel (8B) + optional RTC reply
 - **Request flags** (bits in the first 4 bytes of the header):
 
-  | Bit | Flag | Payload size |
-  |-----|------|-------------|
-  | 0 | ControlWord | 2 bytes |
-  | 1 | MotionControl | 32 bytes |
-  | 2 | RTCCommand | 8 bytes |
+  | Bit | Flag          | Payload size |
+  | --- | ------------- | ------------ |
+  | 0   | ControlWord   | 2 bytes      |
+  | 1   | MotionControl | 32 bytes     |
+  | 2   | RTCCommand    | 8 bytes      |
 
 - **Response flags** (bits in bytes 4–7 of the header):
 
-  | Bits | Flag | Description |
-  |------|------|-------------|
-  | 0–6 | Standard | Status fields (always present in normal responses) |
-  | 7 | MonitoringChannel | Inline 4-channel monitoring data |
-  | 8 | RTCReply | RTC response payload |
+  | Bits | Flag              | Description                                        |
+  | ---- | ----------------- | -------------------------------------------------- |
+  | 0–6  | Standard          | Status fields (always present in normal responses) |
+  | 7    | MonitoringChannel | Inline 4-channel monitoring data                   |
+  | 8    | RTCReply          | RTC response payload                               |
 
-Reference: [`protocol/common/constants.go`](protocol/common/constants.go), [`docs/LinUDP_V2.md`](docs/LinUDP_V2.md)
+Reference: [`protocol/common/constants.go`](protocol/common/constants.go), [`reference/LinUDP_V2.md`](reference/LinUDP_V2.md)
 
 ### 4.2 Engineering Units
 
 All public API methods accept/return **engineering units** (mm, m/s, m/s²). The protocol uses integer units internally.
 
-| Quantity | API unit | Protocol unit | Conversion factor |
-|----------|----------|---------------|-------------------|
-| Position | `mm` | 0.1 µm | × 10,000 |
-| Velocity | `m/s` | 1 µm/s | × 1,000,000 |
-| Acceleration | `m/s²` | 10 µm/s² | × 100,000 |
-| Jerk | `m/s³` | 1 µm/s³ | × 1,000,000 |
+| Quantity     | API unit | Protocol unit | Conversion factor |
+| ------------ | -------- | ------------- | ----------------- |
+| Position     | `mm`     | 0.1 µm        | × 10,000          |
+| Velocity     | `m/s`    | 1 µm/s        | × 1,000,000       |
+| Acceleration | `m/s²`   | 10 µm/s²      | × 100,000         |
+| Jerk         | `m/s³`   | 1 µm/s³       | × 1,000,000       |
 
 Converters: [`protocol/common/units.go`](protocol/common/units.go)
 
@@ -326,11 +326,11 @@ protocol_common.ToProtocolAcceleration(2.5) // → 250000 (2.5 m/s²)
 
 Every parameter write takes a `ParameterStorageType`:
 
-| Type | Behaviour | Survives power cycle? |
-|------|-----------|----------------------|
-| `WriteRAM` | Write to drive RAM only | ❌ Lost on reboot |
-| `WriteROM` | Write to drive NV flash | ✅ Persistent |
-| `WriteRAMAndROM` | Write both atomically | ✅ Persistent |
+| Type             | Behaviour               | Survives power cycle? |
+| ---------------- | ----------------------- | --------------------- |
+| `WriteRAM`       | Write to drive RAM only | ❌ Lost on reboot     |
+| `WriteROM`       | Write to drive NV flash | ✅ Persistent         |
+| `WriteRAMAndROM` | Write both atomically   | ✅ Persistent         |
 
 > ⚠️ **Always use `WriteRAMAndROM`** (or call `WriteRAMAndROM` directly) for any configuration that must survive a power cycle. Pure RAM writes are wiped on every reboot.
 
@@ -352,7 +352,7 @@ upids, _ := c.GetAllParameterIDs(ctx)      // all UPIDs on this drive
 modified, _ := c.GetModifiedParameterIDs(ctx)  // only non-default values
 ```
 
-UPID list reference: [`docs/LinUDP_V2.md`](docs/LinUDP_V2.md) §6
+UPID list reference: [`reference/LinUDP_V2.md`](reference/LinUDP_V2.md) §6
 
 ### 4.5 Command Tables
 
@@ -367,11 +367,11 @@ entries:
   - id: 1
     name: "move to pick"
     type: "VAI_GoToPos"
-    par1: ${POSITION_DOWN}    # Position in 0.1µm units
-    par2: ${MAX_VELOCITY}     # Velocity in µm/s
-    par3: ${ACCELERATION}     # Accel in 1e-5 m/s²
+    par1: ${POSITION_DOWN} # Position in 0.1µm units
+    par2: ${MAX_VELOCITY} # Velocity in µm/s
+    par3: ${ACCELERATION} # Accel in 1e-5 m/s²
     par4: ${DECELERATION}
-    sequenced_entry: 2        # Next entry to run (chaining)
+    sequenced_entry: 2 # Next entry to run (chaining)
 
   - id: 2
     name: "wait stop"
@@ -379,7 +379,7 @@ entries:
     par1: 0
 ```
 
-**Supported entry types** include (non-exhaustive): `VAI_GoToPos`, `Delay`, `SetDO`, `ClearDO`, `WaitDemandVelLT`, `WaitFalling`, `WaitRising`, `IfDemandPosLT`, `IfDemandPosGT`, `IfMaskedX4Eq`, `IfMaskedStatusEq`, and many more — see the full list in [`docs/LinMot_MotionCtrl.md`](docs/LinMot_MotionCtrl.md).
+**Supported entry types** include (non-exhaustive): `VAI_GoToPos`, `Delay`, `SetDO`, `ClearDO`, `WaitDemandVelLT`, `WaitFalling`, `WaitRising`, `IfDemandPosLT`, `IfDemandPosGT`, `IfMaskedX4Eq`, `IfMaskedStatusEq`, and many more — see the full list in [`reference/LinMot_MotionCtrl.md`](reference/LinMot_MotionCtrl.md).
 
 **Loading and deploying a command table:**
 
@@ -404,12 +404,12 @@ Example tables: [`client/rtc/command_tables/testdata/`](client/rtc/command_table
 
 ### 5.1 Creating a Client
 
-| Function | Description |
-|----------|-------------|
-| `linmot.NewClient(ip)` | Convenience wrapper — default ports, validates connectivity |
-| `client.NewUDPClient(ip, drivePort, masterPort, bindAddr, timeout)` | Full control over ports and bind address |
-| `client.NewClientWithTransport(ip, transport)` | Inject a pre-built transport (e.g., from `SharedUDPTransport`) |
-| `client.NewMockClient()` | Testing only — returns `(*Client, transport.Server)` |
+| Function                                                            | Description                                                    |
+| ------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `linmot.NewClient(ip)`                                              | Convenience wrapper — default ports, validates connectivity    |
+| `client.NewUDPClient(ip, drivePort, masterPort, bindAddr, timeout)` | Full control over ports and bind address                       |
+| `client.NewClientWithTransport(ip, transport)`                      | Inject a pre-built transport (e.g., from `SharedUDPTransport`) |
+| `client.NewMockClient()`                                            | Testing only — returns `(*Client, transport.Server)`           |
 
 On creation, the client **validates connectivity** by sending status requests. If the drive is not reachable or not in an operational state, construction fails with a descriptive error. Set `LINMOT_SKIP_VALIDATE_CONNECTIVITY=1` to bypass this check.
 
@@ -429,17 +429,17 @@ c.GetDriveStatus(ctx)    // read-only status poll
 
 **State machine states** (decoded from `StateVar >> 8`):
 
-| Code | Name |
-|------|------|
-| 0 | NotReadyToSwitchOn |
-| 1 | SwitchOnDisabled |
-| 2 | ReadyToSwitchOn |
-| 3 | SetupError |
-| 4 | GeneralError |
-| 5 | HWTests |
-| 6 | ReadyToOperate |
-| 8 | OperationEnabled |
-| 9 | Homing |
+| Code | Name               |
+| ---- | ------------------ |
+| 0    | NotReadyToSwitchOn |
+| 1    | SwitchOnDisabled   |
+| 2    | ReadyToSwitchOn    |
+| 3    | SetupError         |
+| 4    | GeneralError       |
+| 5    | HWTests            |
+| 6    | ReadyToOperate     |
+| 8    | OperationEnabled   |
+| 9    | Homing             |
 
 Source: [`client/operational.go`](client/operational.go)
 
@@ -551,7 +551,7 @@ c.GetMonitoringChannelConfiguration(ctx, 1)
 c.GetAllMonitoringChannelConfigurations(ctx)  // [4]uint16
 ```
 
-Monitoring channel UPIDs: `0x20A8`–`0x20AB`. Reference: [`docs/LinUDP_V2.md`](docs/LinUDP_V2.md) §5.
+Monitoring channel UPIDs: `0x20A8`–`0x20AB`. Reference: [`reference/LinUDP_V2.md`](reference/LinUDP_V2.md) §5.
 
 ### 5.7 Curves
 
@@ -605,6 +605,7 @@ c0, err = pool.GetClient("10.8.7.232")  // fresh client, new socket state
 ```
 
 **Key behaviours:**
+
 - First `GetClient` for a new IP blocks until the client is created and connectivity is validated
 - Concurrent callers for the same IP wait on a shared future — only one creation attempt per IP at a time
 - Failed entries are retried after 5 seconds (`failedEntryRetryInterval`)
@@ -618,22 +619,22 @@ Source: [`client/pool.go`](client/pool.go)
 
 The MC channel supports 15 interface types. The `MotionControlManager` (and `Client`) expose the ones used in production. The full protocol-level implementations live in `protocol/motion_control/`:
 
-| Interface | Package | Description |
-|-----------|---------|-------------|
-| VAI | `vai/` | Go-to position, increment demand/target, stop |
-| VAI16 | `vai16/` | 16-bit variant of VAI |
-| Predefined | `predefined/` | Execute a stored command table entry |
-| PredefVAI16 | `predef_vai16/` | Predefined with 16-bit params |
-| Streaming | `streaming/` | Streaming position/velocity commands |
-| Interface Control | `interface_control/` | Direct MC interface control commands |
-| Advanced | `advanced/` | Advanced motion commands |
-| Bestehorn | `bestehorn/` | Bestehorn cam profile execution |
-| Cams | `cams/` | Cam table execution |
-| Encoder Cams | `encoder_cams/` | Encoder-synchronized cam execution |
-| Indexing | `indexing/` | Incremental indexing moves |
-| VAI Dec/Acc | `vai_dec_acc/` | VAI with separate dec/acc profiles |
-| VAI Positioning | `vai_positioning/` | VAI positioning variant |
-| VAI Predef Acc | `vai_predef_acc/` | VAI with predefined acceleration |
+| Interface         | Package              | Description                                   |
+| ----------------- | -------------------- | --------------------------------------------- |
+| VAI               | `vai/`               | Go-to position, increment demand/target, stop |
+| VAI16             | `vai16/`             | 16-bit variant of VAI                         |
+| Predefined        | `predefined/`        | Execute a stored command table entry          |
+| PredefVAI16       | `predef_vai16/`      | Predefined with 16-bit params                 |
+| Streaming         | `streaming/`         | Streaming position/velocity commands          |
+| Interface Control | `interface_control/` | Direct MC interface control commands          |
+| Advanced          | `advanced/`          | Advanced motion commands                      |
+| Bestehorn         | `bestehorn/`         | Bestehorn cam profile execution               |
+| Cams              | `cams/`              | Cam table execution                           |
+| Encoder Cams      | `encoder_cams/`      | Encoder-synchronized cam execution            |
+| Indexing          | `indexing/`          | Incremental indexing moves                    |
+| VAI Dec/Acc       | `vai_dec_acc/`       | VAI with separate dec/acc profiles            |
+| VAI Positioning   | `vai_positioning/`   | VAI positioning variant                       |
+| VAI Predef Acc    | `vai_predef_acc/`    | VAI with predefined acceleration              |
 
 ---
 
@@ -644,6 +645,7 @@ The MC channel supports 15 interface types. The `MotionControlManager` (and `Cli
 [`test/mock_linmot.go`](test/mock_linmot.go) implements a complete LinMot drive simulator in memory. It is used by both unit tests and E2E tests across the codebase.
 
 **Simulated capabilities:**
+
 - Full CiA 402 state machine (NotReadyToSwitchOn → SwitchOnDisabled → ReadyToOperate → OperationEnabled → Homing)
 - RAM and ROM parameter storage (`map[uint16]int32` each)
 - RTC command table: read/write/flash-save/presence-masks
@@ -680,6 +682,7 @@ LINMOT_TEST_DEBUG=1 go test ./linmot_client/...
 ```
 
 The module has **42 test files** and **148 Go source files**. Tests cover:
+
 - `client/common/` — RequestManager parity tests, RTC counter, pending request lifecycle
 - `client/` — operational state assertions, pool eviction, fault detection, diagnostic motion matrix
 - `protocol/*/` — packet encoding/decoding roundtrips for every interface
@@ -689,16 +692,16 @@ The module has **42 test files** and **148 Go source files**. Tests cover:
 
 ## 9. Reference Documentation
 
-All official LinMot documentation lives in [`docs/`](docs/). See [`docs/README.md`](docs/README.md) for the full index, key reference table, and our drive configuration values.
+All official LinMot documentation lives in [`reference/`](reference/). See [`reference/README.md`](reference/README.md) for the full index, key reference table, and our drive configuration values.
 
-| Document | Most Important Section |
-|----------|------------------------|
-| [`C1250_MI_Installation_Guide.md`](docs/C1250_MI_Installation_Guide.md) | §9.9 DIP switch layout · §10 LED blink codes |
-| [`LinUDP_V2.md`](docs/LinUDP_V2.md) | §3.2 default IP addressing · §4 packet format · §5 monitoring · §6 UPID list |
-| [`LinUDP_V2_DLL.md`](docs/LinUDP_V2_DLL.md) | Appendix I — "Static by IP Configuration" commissioning path |
-| [`LinMotTalk_Manual.md`](docs/LinMotTalk_Manual.md) | §4.1 — factory reset (6-step hardware procedure) |
-| [`LinMot_MotionCtrl.md`](docs/LinMot_MotionCtrl.md) | Easy Steps auto start/home · command table types · Set Stiff vs. Set Soft |
-| [`decompiled_linudp_csharp_lib.cs`](docs/decompiled_linudp_csharp_lib.cs) | Canonical reference for packet construction and ACI function signatures |
+| Document                                                                       | Most Important Section                                                       |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| [`C1250_MI_Installation_Guide.md`](reference/C1250_MI_Installation_Guide.md)   | §9.9 DIP switch layout · §10 LED blink codes                                 |
+| [`LinUDP_V2.md`](reference/LinUDP_V2.md)                                       | §3.2 default IP addressing · §4 packet format · §5 monitoring · §6 UPID list |
+| [`LinUDP_V2_DLL.md`](reference/LinUDP_V2_DLL.md)                               | Appendix I — "Static by IP Configuration" commissioning path                 |
+| [`LinMotTalk_Manual.md`](reference/LinMotTalk_Manual.md)                       | §4.1 — factory reset (6-step hardware procedure)                             |
+| [`LinMot_MotionCtrl.md`](reference/LinMot_MotionCtrl.md)                       | Easy Steps auto start/home · command table types · Set Stiff vs. Set Soft    |
+| [`decompiled_linudp_csharp_lib.cs`](reference/decompiled_linudp_csharp_lib.cs) | Canonical reference for packet construction and ACI function signatures      |
 
 ---
 

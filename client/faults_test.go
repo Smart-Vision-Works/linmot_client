@@ -7,14 +7,13 @@ import (
 	"time"
 
 	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
-	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
-func newFaultTestClient(t *testing.T) (*Client, *test.MockLinMot, func()) {
+func newFaultTestClient(t *testing.T) (*Client, *MockLinMot, func()) {
 	t.Helper()
 
 	client, transportServer := NewMockClient()
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 
 	cleanup := func() {

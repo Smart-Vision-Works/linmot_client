@@ -6,7 +6,6 @@ import (
 	"time"
 
 	protocol_common "github.com/Smart-Vision-Works/linmot_client/protocol/common"
-	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 func TestAssertDriveOperational_FirmwareStopped(t *testing.T) {
@@ -63,7 +62,7 @@ func TestValidateConnectivity_FailFast(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -87,7 +86,7 @@ func TestValidateConnectivity_OK(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 

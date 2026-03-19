@@ -12,7 +12,6 @@ import (
 	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
 	protocol_parameters "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/parameters"
-	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 func TestNewClient(t *testing.T) {
@@ -29,7 +28,7 @@ func TestNewClient_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -104,7 +103,7 @@ func TestClient_GetStatus_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -144,7 +143,7 @@ func TestClient_GetPosition_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -165,7 +164,7 @@ func TestClient_SetPosition1_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -181,7 +180,7 @@ func TestClient_SetVelocity_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -197,7 +196,7 @@ func TestClient_SetAcceleration_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -213,7 +212,7 @@ func TestClient_SetDeceleration_WithMockServer(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -229,7 +228,7 @@ func TestClient_ConcurrentAccess(t *testing.T) {
 	defer client.Close()
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -272,7 +271,7 @@ func TestClient_GetStatus_Timeout(t *testing.T) {
 	defer client.Close()
 
 	// Create mock drive but DON'T start it - this simulates a non-responsive drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	// Intentionally not calling drive.Start() to simulate timeout
 
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
@@ -337,7 +336,7 @@ func TestClient_RequestTimeoutError_MockClient(t *testing.T) {
 	defer cancel()
 
 	// Create mock drive but DON'T start it - this simulates a non-responsive drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	defer drive.Close()
 
 	// This should timeout after the request timeout (5s) but before context timeout (6s)
@@ -367,7 +366,7 @@ func TestClient_ErrorSimulation(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -469,7 +468,7 @@ func TestClient_InvalidUPIDErrors(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -536,7 +535,7 @@ func TestClient_ResponseMatchingCommandCount(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -557,7 +556,7 @@ func TestClient_ResponseMatchingRTCStatus(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -580,7 +579,7 @@ func TestClient_ResponseMatchingStaleResponse(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -606,7 +605,7 @@ func TestClient_ResponseMatchingConcurrentRequests(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -631,7 +630,7 @@ func TestClient_WriteRAMAndROM(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -655,7 +654,7 @@ func TestClient_GetParameterMinValue(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -672,7 +671,7 @@ func TestClient_GetParameterMaxValue(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -689,7 +688,7 @@ func TestClient_GetParameterDefaultValue(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -708,7 +707,7 @@ func TestClient_GetAllParameterIDs(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -726,7 +725,7 @@ func TestClient_GetModifiedParameterIDs(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -744,7 +743,7 @@ func TestClient_GetAllParameters(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -762,7 +761,7 @@ func TestClient_GetModifiedParameters(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -782,7 +781,7 @@ func TestClient_RestartDrive(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -796,7 +795,7 @@ func TestClient_ResetOSParametersToDefault(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -810,7 +809,7 @@ func TestClient_ResetMCParametersToDefault(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -824,7 +823,7 @@ func TestClient_ResetInterfaceParametersToDefault(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -838,7 +837,7 @@ func TestClient_ResetApplicationParametersToDefault(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -854,7 +853,7 @@ func TestClient_SaveAllCurves(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -868,7 +867,7 @@ func TestClient_DeleteAllCurves(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -884,7 +883,7 @@ func TestClient_GetErrorLog(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -902,7 +901,7 @@ func TestClient_GetErrorText(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -923,7 +922,7 @@ func TestClient_GetErrorLogWithText(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -943,7 +942,7 @@ func TestClient_SetEasyStepsAutoStart(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -957,7 +956,7 @@ func TestClient_SetEasyStepsAutoHome(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -971,7 +970,7 @@ func TestClient_SetEasyStepsInputRisingEdgeFunction(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -985,7 +984,7 @@ func TestClient_SetEasyStepsInputCurveCmdID(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -999,7 +998,7 @@ func TestClient_SetIODefOutputFunction(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1013,7 +1012,7 @@ func TestClient_SetIODefInputFunction(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1027,7 +1026,7 @@ func TestClient_SetTriggerMode(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1041,7 +1040,7 @@ func TestClient_ResponseMatchingStatusRequest(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1082,7 +1081,7 @@ func TestClient_EnableDrive(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1113,7 +1112,7 @@ func TestClient_DisableDrive(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1151,7 +1150,7 @@ func TestClient_Home(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1183,7 +1182,7 @@ func TestClient_QuickStop(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1208,7 +1207,7 @@ func TestClient_SendControlWord(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1234,7 +1233,7 @@ func TestClient_GetDriveStatus(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1266,7 +1265,7 @@ func TestClient_AcknowledgeError(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1299,7 +1298,7 @@ func TestClient_AcknowledgeError_FatalError(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1330,7 +1329,7 @@ func TestClient_AcknowledgeError_TimeoutWhenErrorDoesNotClear(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1359,7 +1358,7 @@ func TestClient_StateTransitions(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1408,7 +1407,7 @@ func TestClient_ClearSimulatedErrorResetsStateVarMainState(t *testing.T) {
 	client, server := NewMockClient()
 	defer client.Close()
 
-	mock := test.NewMockLinMot(server)
+	mock := NewMockLinMot(server)
 	mock.Start()
 	defer mock.Stop()
 
@@ -1448,7 +1447,7 @@ func TestClient_ConfigureMonitoringChannel(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1475,7 +1474,7 @@ func TestClient_ConfigureMonitoringChannels(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1504,7 +1503,7 @@ func TestClient_GetMonitoringData(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1540,7 +1539,7 @@ func TestClient_GetMonitoringSnapshot(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1575,7 +1574,7 @@ func TestClient_MonitoringChannelZeroConfiguration(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1599,7 +1598,7 @@ func TestClient_ConfigureMonitoringChannelInvalidNumber(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1623,7 +1622,7 @@ func TestClient_VAIGoToPosition(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1649,7 +1648,7 @@ func TestClient_VAIIncrementPosition(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1682,7 +1681,7 @@ func TestClient_VAIStop(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1703,7 +1702,7 @@ func TestClient_VAIIncrementActualPosition(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1724,7 +1723,7 @@ func TestClient_VAIGoToAnalogPosition(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1745,7 +1744,7 @@ func TestClient_VAIGoToPositionOnRisingTrigger(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1766,7 +1765,7 @@ func TestClient_VAIChangeMotionParamsOnPositiveTransition(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1787,7 +1786,7 @@ func TestClient_MC_CounterWraparound(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 
@@ -1808,7 +1807,7 @@ func TestClient_MC_ResponseMatching(t *testing.T) {
 	client, transportServer := NewMockClient()
 	defer client.Close()
 
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 	defer drive.Close()
 

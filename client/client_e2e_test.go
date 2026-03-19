@@ -24,7 +24,6 @@ import (
 	protocol_motion_control "github.com/Smart-Vision-Works/linmot_client/protocol/motion_control"
 	protocol_rtc "github.com/Smart-Vision-Works/linmot_client/protocol/rtc"
 	protocol_command_tables "github.com/Smart-Vision-Works/linmot_client/protocol/rtc/command_tables"
-	"github.com/Smart-Vision-Works/linmot_client/test"
 )
 
 var (
@@ -94,7 +93,7 @@ func initializeMockClient() (*Client, func() error, error) {
 	client.SetDebug(*linmotDebug)
 
 	// Create and start the mock drive
-	drive := test.NewMockLinMot(transportServer)
+	drive := NewMockLinMot(transportServer)
 	drive.Start()
 
 	// Set up drive state

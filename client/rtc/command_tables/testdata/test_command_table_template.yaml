@@ -1,0 +1,26 @@
+version: 1
+drive_model: C1250-MI
+entries:
+  - id: 2
+    name: "move down"
+    type: VAI_GoToPos
+    par1: 500000
+    par2: ${MAX_VELOCITY}
+    par3: ${ACCELERATION}
+    par4: ${DECELERATION}
+    sequenced_entry: 4
+
+  - id: 4
+    name: "wait at bottom"
+    type: Delay
+    par1: ${DELAY_AT_BOTTOM}
+    sequenced_entry: 5
+
+  - id: 5
+    name: "move up"
+    type: VAI_GoToPos
+    par1: ${POSITION_UP}
+    par2: ${MAX_VELOCITY}
+    par3: ${ACCELERATION}
+    par4: ${DECELERATION}
+

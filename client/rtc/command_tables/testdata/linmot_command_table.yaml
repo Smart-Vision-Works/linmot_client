@@ -1,0 +1,8 @@
+version: "1"
+drive_model: "LINMOT"
+entries:
+  - id: 1
+    name: "test_delay"
+    type: "Delay"
+    par1: 1000
+

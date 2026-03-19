@@ -1,0 +1,88 @@
+version: 1
+drive_model: C1250-MI
+entries:
+  # 1: set bit 0 to high, vacuum on, purge off
+  - id: 1
+    name: "von/poff"
+    type: SetDO
+    par1: 0x0003      # X4 Write Bit Mask
+    par2: 0x0002      # X4 Write Bit Value
+    sequenced_entry: 2
+
+  # 2: move to down
+  - id: 2
+    name: "move down"
+    type: VAI_GoToPos
+    par1: ${POSITION_DOWN}      # Position: 50.000 mm = 500000 in 0.1µm units
+    par2: ${MAX_VELOCITY}       # Max Vel: 10 mm/s = 100000 in µm/s
+    par3: ${ACCELERATION}       # Acc: 10 m/s² = 100000 in 1e-5 m/s²
+    par4: ${DECELERATION}       # Dec: 10 m/s² = 100000 in 1e-5 m/s²
+    sequenced_entry: 3
+
+  # 3: wait for motion (until velocity < threshold)
+  - id: 3
+    name: "wait for motion"
+    type: WaitDemandVelLT
+    par1: 0           # Threshold: 0 (wait until stopped)
+    sequenced_entry: 4
+
+  # 4: wait at bottom
+  - id: 4
+    name: "wait at bottom"
+    type: Delay
+    par1: ${DELAY_AT_BOTTOM}    # Time: 100 ms = 1000 in 100µs units
+    sequenced_entry: 5
+
+  # 5: move to up
+  - id: 5
+    name: "move up"
+    type: VAI_GoToPos
+    par1: ${POSITION_UP}        # Position: 10.000 mm = 100000 in 0.1µm units
+    par2: ${MAX_VELOCITY}       # Max Vel: 10 mm/s
+    par3: ${ACCELERATION}       # Acc: 10 m/s²
+    par4: ${DECELERATION}       # Dec: 10 m/s²
+    sequenced_entry: 6
+
+  # 6: wait for motion (until velocity < threshold)
+  - id: 6
+    name: "wait for motion"
+    type: WaitDemandVelLT
+    par1: 0           # Threshold: 0 (wait until stopped)
+    sequenced_entry: 7
+
+  # 7: trigger check
+  - id: 7
+    name: "trigger check"
+    type: IfMaskedX4Eq
+    par1: 0x0002      # X4 Read Bit Mask
+    par2: 0x0002      # X4 Read Bit Value
+    par3: 8           # True Entry ID: 8
+    par4: 9           # False Entry ID: 9
+
+  # 8: falling edge
+  - id: 8
+    name: "falling edge"
+    type: WaitFalling
+    sequenced_entry: 9
+
+  # 9: vacuum on / purge off
+  - id: 9
+    name: "voff/pon"
+    type: ClearDO
+    par1: 0x0003
+    par2: 0x0001
+    sequenced_entry: 10
+
+  # 10: wait
+  - id: 10
+    name: "wait"
+    type: Delay
+    par1: ${DELAY_PURGE}        # Time: 500 ms = 5000 in 100µs units
+    sequenced_entry: 11
+
+  # 11: off
+  - id: 11
+    name: "off"
+    type: ClearDO
+    par1: 0x0003
+    par2: 0x0000

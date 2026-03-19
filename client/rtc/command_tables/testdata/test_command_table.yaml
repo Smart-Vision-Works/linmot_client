@@ -1,0 +1,42 @@
+version: 1
+drive_model: C1250-MI
+entries:
+  - id: 1
+    name: TrigSel
+    type: ParamWrite
+    par1: 4153         # UPID 0x1039 Trigger In source
+    par2: 2            # choose DI source index (example)
+
+  - id: 2
+    name: WaitStart
+    type: WaitRising
+    sequenced_entry: 3
+
+  - id: 3
+    name: MoveDown
+    type: MoveAbs
+    par1: 10000        # 1.0 mm in 0.1 µm units
+    par2: 200000       # 0.2 m/s in µm/s
+    par3: 300000       # 3.0 m/s^2 in 1e-5 m/s^2
+    par4: 300000
+    sequenced_entry: 4
+
+  - id: 4
+    name: Dwell
+    type: Delay
+    par1: 5000         # 5000 * 100 µs = 0.5 s
+    sequenced_entry: 5
+
+  - id: 5
+    name: VacuumOn
+    type: SetDO
+    par1: 1            # mask bit0
+    par2: 1            # set bit0
+    sequenced_entry: 6
+
+  - id: 6
+    name: MoveUp
+    type: MoveRel
+    par1: -10000       # -1.0 mm
+    par2: 200000
+    par3: 300000
